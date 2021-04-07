@@ -10,11 +10,15 @@
     "start": "webpack-dev-server --open"
   },
   "devDependencies": {
-    "eslint": "7.13.0",
+    "eslint": "^7.13.0",
     "eslint-config-htmlacademy": "3.0.0",
     "webpack": "4.44.2",
     "webpack-cli": "3.3.12",
     "webpack-dev-server": "3.11.0"
+  },
+  "dependencies": {
+    "3.0.0": "^3.0.0",
+    "dayjs": "1.9.5"
   },
   "engines": {
     "node": "10"

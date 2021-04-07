@@ -1,29 +1,32 @@
-const createWaypointsMarkup = () => {
+import dayjs from 'dayjs';
+const createWaypointsMarkup = (waypoints) => {
+  const {price, startDate, startTime, endTime, offers, type,
+    destination, duration} = waypoints;
   return `<ul class="trip-events__list">
     <li class="trip-events__item">
       <div class="event">
-        <time class="event__date" datetime="2019-03-18">MAR 18</time>
+        <time class="event__date" datetime="2019-03-18">${dayjs(startDate).format('DD MMM')}</time>
         <div class="event__type">
-          <img class="event__type-icon" width="42" height="42" src="img/icons/flight.png" alt="Event type icon">
+          <img class="event__type-icon" width="42" height="42" src="img/icons/${type}.png" alt="Event type icon">
         </div>
-        <h3 class="event__title">Flight Chamonix</h3>
+        <h3 class="event__title">${destination}</h3>
         <div class="event__schedule">
           <p class="event__time">
-            <time class="event__start-time" datetime="2019-03-18T12:25">12:25</time>
+            <time class="event__start-time" datetime="2019-03-18T12:25">${startTime}</time>
             &mdash;
-            <time class="event__end-time" datetime="2019-03-18T13:35">13:35</time>
+            <time class="event__end-time" datetime="2019-03-18T13:35">${endTime}</time>
           </p>
-          <p class="event__duration">01H 10M</p>
+          <p class="event__duration">${duration}</p>
         </div>
         <p class="event__price">
-          &euro;&nbsp;<span class="event__price-value">160</span>
+          &euro;&nbsp;<span class="event__price-value">${price}</span>
         </p>
         <h4 class="visually-hidden">Offers:</h4>
         <ul class="event__selected-offers">
           <li class="event__offer">
-            <span class="event__offer-title">Add luggage</span>
+            <span class="event__offer-title">${offers.offers[0].title}</span>
             &plus;&euro;&nbsp;
-            <span class="event__offer-price">50</span>
+            <span class="event__offer-price">${offers.offers[0].price}</span>
           </li>
           <li class="event__offer">
             <span class="event__offer-title">Switch to comfort</span>
