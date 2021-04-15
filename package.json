@@ -17,8 +17,8 @@
     "webpack-dev-server": "3.11.0"
   },
   "dependencies": {
-    "3.0.0": "^3.0.0",
-    "dayjs": "1.9.5"
+    "dayjs": "1.9.5",
+    "dayjs-random": "^1.0.0"
   },
   "engines": {
     "node": "10"

@@ -1,7 +1,22 @@
 import dayjs from 'dayjs';
 const createWaypointsMarkup = (waypoints) => {
-  const {price, startDate, startTime, endTime, offers, type,
+  const {price, startDate, endDate, offers, type,
     destination, duration} = waypoints;
+  const renderOffers = () => {
+    if (offers) {
+      return `<li class="event__offer">
+        <span class="event__offer-title">${offers[0].title}</span>
+        &plus;&euro;&nbsp;
+        <span class="event__offer-price">${offers[0].price}</span>
+      </li>
+      <li class="event__offer">
+        <span class="event__offer-title">${offers[1].title}</span>
+        &plus;&euro;&nbsp;
+        <span class="event__offer-price">${offers[1].price}</span>
+      </li>`;
+    }
+    return '';
+  };
   return `<ul class="trip-events__list">
     <li class="trip-events__item">
       <div class="event">
@@ -12,9 +27,9 @@ const createWaypointsMarkup = (waypoints) => {
         <h3 class="event__title">${destination}</h3>
         <div class="event__schedule">
           <p class="event__time">
-            <time class="event__start-time" datetime="2019-03-18T12:25">${startTime}</time>
+            <time class="event__start-time" datetime="2019-03-18T12:25">${dayjs(startDate).format('H:mm')}</time>
             &mdash;
-            <time class="event__end-time" datetime="2019-03-18T13:35">${endTime}</time>
+            <time class="event__end-time" datetime="2019-03-18T13:35">${dayjs(endDate).format('H:mm')}</time>
           </p>
           <p class="event__duration">${duration}</p>
         </div>
@@ -23,16 +38,7 @@ const createWaypointsMarkup = (waypoints) => {
         </p>
         <h4 class="visually-hidden">Offers:</h4>
         <ul class="event__selected-offers">
-          <li class="event__offer">
-            <span class="event__offer-title">${offers.offers[0].title}</span>
-            &plus;&euro;&nbsp;
-            <span class="event__offer-price">${offers.offers[0].price}</span>
-          </li>
-          <li class="event__offer">
-            <span class="event__offer-title">Switch to comfort</span>
-            &plus;&euro;&nbsp;
-            <span class="event__offer-price">80</span>
-          </li>
+  ${renderOffers()}
         </ul>
         <button class="event__favorite-btn" type="button">
           <span class="visually-hidden">Add to favorite</span>
