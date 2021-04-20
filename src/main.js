@@ -6,7 +6,7 @@ import { createSortMarkup } from './view/sort.js';
 import { createCreatingFormMarkup } from './view/creating-form.js';
 import { createEditFormMarkup } from './view/edit-form.js';
 import { createWaypointsMarkup } from './view/waypoint.js';
-import { wayPoints } from './mock.js';
+import { wayPoints, filter } from './mock.js';
 import { WAYPOINT_COUNT } from './const';
 
 
@@ -22,7 +22,7 @@ const renderMarkup = (container, template, place) => {
 };
 
 renderMarkup(tripControlsNavigation, createMenuMarkup(), 'beforeend');
-renderMarkup(tripControlsFilters, createFilterMarkup(), 'beforeend');
+renderMarkup(tripControlsFilters, createFilterMarkup(filter), 'beforeend');
 renderMarkup(tripEvents, createSortMarkup(), 'beforeend');
 renderMarkup(tripMain, createRouteMarkup(wayPoints), 'afterbegin');
 renderMarkup(tripMain, createCostMarkup(wayPoints), 'afterbegin');

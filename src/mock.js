@@ -69,7 +69,7 @@ const createWaypoint = () => {
     endDate: endDate,
     duration: DURATION[getRandomInteger(0, 2)],
     price: getRandomInteger(100, 1000),
-    offers: offers.get(type), // <== Это считается объединением структур?
+    offers: offers.get(type),
   };
 };
 
@@ -95,7 +95,6 @@ const getCurrentPoints = (points) => {
   }
   return arr.length;
 };
-console.log(getCurrentPoints(wayPoints));
 
 const wayPointsMap = {
   everything: (points) => points.length,
@@ -113,5 +112,5 @@ const generateFilter = (points) => {
 };
 
 const filter = generateFilter(wayPoints);
-console.log(filter);
-export {wayPoints};
+
+export {wayPoints, filter};
