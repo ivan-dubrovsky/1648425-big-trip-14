@@ -1,15 +1,14 @@
 import dayjs from 'dayjs';
-import { renderOffers } from './creating-form.js';
+import { renderOffersContainer } from './creating-form.js';
 const createEditFormMarkup = (waypoints) => {
   const {type, destination, startDate, endDate, price, information, offers} = waypoints;
-
 
   return `<form class="event event--edit" action="#" method="post">
     <header class="event__header">
       <div class="event__type-wrapper">
         <label class="event__type  event__type-btn" for="event-type-toggle-1">
           <span class="visually-hidden">Choose event type</span>
-          <img class="event__type-icon" width="17" height="17" src="img/icons/${type}.png" alt="Event type icon">
+          <img class="event__type-icon" width="17" height="17" src="img/icons/${type.toLowerCase()}.png" alt="Event type icon">
         </label>
         <input class="event__type-toggle  visually-hidden" id="event-type-toggle-1" type="checkbox">
 
@@ -105,17 +104,8 @@ const createEditFormMarkup = (waypoints) => {
       </button>
     </header>
     <section class="event__details">
-      <section class="event__section  event__section--offers">
-        <h3 class="event__section-title  event__section-title--offers">Offers</h3>
 
-        <div class="event__available-offers">
-
-
-      ${renderOffers(offers)}
-
-
-        </div>
-      </section>
+      ${renderOffersContainer(offers)}
 
       <section class="event__section  event__section--destination">
         <h3 class="event__section-title  event__section-title--destination">Destination</h3>

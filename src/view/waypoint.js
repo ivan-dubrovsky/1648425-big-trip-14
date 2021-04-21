@@ -3,20 +3,14 @@ const createWaypointsMarkup = (waypoints) => {
   const {price, startDate, endDate, offers, type,
     destination, duration} = waypoints;
   const renderOffers = () => {
-    if (offers) {
-      return `<li class="event__offer">
-        <span class="event__offer-title">${offers[0].title}</span>
-        &plus;&euro;&nbsp;
-        <span class="event__offer-price">${offers[0].price}</span>
-      </li>
-      <li class="event__offer">
-        <span class="event__offer-title">${offers[1].title}</span>
-        &plus;&euro;&nbsp;
-        <span class="event__offer-price">${offers[1].price}</span>
-      </li>`;
-    }
-    return '';
+    return  offers ? offers.map((offer) => `<li class="event__offer">
+    <span class="event__offer-title">${offer.title}</span>
+    &plus;&euro;&nbsp;
+    <span class="event__offer-price">${offer.price}</span>
+  </li>`)
+      .join(' ') : '';
   };
+
   return `<ul class="trip-events__list">
     <li class="trip-events__item">
       <div class="event">

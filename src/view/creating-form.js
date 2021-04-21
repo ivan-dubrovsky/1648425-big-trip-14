@@ -1,4 +1,5 @@
 import dayjs from 'dayjs';
+
 const getOffersTemplate = (title, price) => {
   return `<div class="event__offer-selector">
   <input class="event__offer-checkbox  visually-hidden" id="event-offer-${title}-1" type="checkbox" name="event-offer-${title}" checked>
@@ -10,11 +11,18 @@ const getOffersTemplate = (title, price) => {
 </div>`;
 };
 
-const renderOffers = (offers) => {
-  return  offers ? offers.map((offer) => getOffersTemplate(offer.title, offer.price))
-    .join('') : offers = ' ';
+const renderOffersContainer = (offers) => {
+  const renderOffers = (offers) => {
+    return  offers ? offers.map((offer) => getOffersTemplate(offer.title, offer.price))
+      .join('') : offers = ' ';
+  };
+  return offers ?  `<section class="event__section  event__section--offers">
+  <h3 class="event__section-title  event__section-title--offers">Offers</h3>
+  <div class="event__available-offers">
+  ${renderOffers(offers)}
+  </div>
+  </section>` : '';
 };
-
 
 const createCreatingFormMarkup = (waypoints) => {
   const {type, destination, startDate, endDate, price, information, offers} = waypoints;
@@ -23,7 +31,7 @@ const createCreatingFormMarkup = (waypoints) => {
       <div class="event__type-wrapper">
         <label class="event__type  event__type-btn" for="event-type-toggle-1">
           <span class="visually-hidden">Choose event type</span>
-          <img class="event__type-icon" width="17" height="17" src="img/icons/${type}.png" alt="Event type icon">
+          <img class="event__type-icon" width="17" height="17" src="img/icons/${type.toLowerCase()}.png" alt="Event type icon">
         </label>
         <input class="event__type-toggle  visually-hidden" id="event-type-toggle-1" type="checkbox">
         <div class="event__type-list">
@@ -101,18 +109,15 @@ const createCreatingFormMarkup = (waypoints) => {
       <button class="event__reset-btn" type="reset">Cancel</button>
     </header>
     <section class="event__details">
-      <section class="event__section  event__section--offers">
-        <h3 class="event__section-title  event__section-title--offers">Offers</h3>
-        <div class="event__available-offers">
-${renderOffers(offers)}
-        </div>
-      </section>
+
+${renderOffersContainer(offers)}
+
       <section class="event__section  event__section--destination">
         <h3 class="event__section-title  event__section-title--destination">Destination</h3>
         <p class="event__destination-description">${information.description}</p>
         <div class="event__photos-container">
           <div class="event__photos-tape">
-            <img class="event__photo" src="${information.photos}" alt="Event photo">
+            <img class="event__photo" src="${information.photo}" alt="Event photo">
           </div>
         </div>
       </section>
@@ -120,4 +125,4 @@ ${renderOffers(offers)}
   </form>`;
 };
 
-export { createCreatingFormMarkup, renderOffers };
+export { createCreatingFormMarkup, renderOffersContainer};

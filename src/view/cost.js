@@ -1,10 +1,17 @@
+const getSumOfNumbers = (arr) => {
+  const reducer = (accumulator, currentValue) => accumulator + currentValue;
+  return arr.reduce(reducer);
+};
+
+const getPrices = (arr) => {
+  const costs = [];
+  arr.map((offer) => costs.push(offer.price));
+  return costs;
+};
+
 const createCostMarkup = (wayPoint) => {
-  const getTotalCost = () => {
-    const cost = wayPoint[0].price + wayPoint[1].price + wayPoint[2].price;
-    return cost;
-  };
   return `<p class="trip-info__cost">
-    Total: &euro;&nbsp;<span class="trip-info__cost-value">${getTotalCost()}</span>
+    Total: &euro;&nbsp;<span class="trip-info__cost-value">${getSumOfNumbers(getPrices(wayPoint))}</span>
   </p>`;
 };
 

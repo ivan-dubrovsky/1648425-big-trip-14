@@ -18,7 +18,8 @@
   },
   "dependencies": {
     "dayjs": "1.9.5",
-    "dayjs-random": "^1.0.0"
+    "dayjs-random": "^1.0.0",
+    "flatpickr": "^4.6.9"
   },
   "engines": {
     "node": "10"

@@ -45,16 +45,34 @@ const busOffers = [
     price: 5,
   },
 ];
-const type = TYPE_WAYPOINT[getRandomInteger(0, TYPE_WAYPOINT.length - 1)];
+const flightOffers = [
+  {
+    title: 'Add luggage',
+    price: 20,
+  },
+  {
+    title: 'Add meal',
+    price: 10,
+  },
+];
+const driveOffers = [
+  {
+    title: 'Upgrade to comfort class',
+    price: 10,
+  },
+];
 
 // Дополнительные опции
 const offers =  new Map();
 offers.set('Taxi', taxiOffers);
 offers.set('Train', trainOffers);
 offers.set('Bus', busOffers);
+offers.set('Flight', flightOffers);
+offers.set('Drive', driveOffers);
 
 // Точка маршрута
 const createWaypoint = () => {
+  const type = TYPE_WAYPOINT[getRandomInteger(0, TYPE_WAYPOINT.length - 1)];
   dayjs.extend(dayjsRandom);
   const startDate = randomDate(-7, 7);
   const endDate = dayjs.soon(getRandomInteger(1,7), startDate).toDate();
@@ -63,7 +81,7 @@ const createWaypoint = () => {
     destination: DESTINATIONS[getRandomInteger(0, DESTINATIONS.length - 1)],
     information: {
       description: getRandomDescription(DESCRIPTION_TEXT, 5),
-      photos: `http://picsum.photos/248/152?r=${getRandomInteger(0, 4)}`,
+      photo: `http://picsum.photos/248/152?r=${getRandomInteger(0, 4)}`,
     },
     startDate: startDate,
     endDate: endDate,
