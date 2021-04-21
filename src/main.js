@@ -6,8 +6,9 @@ import { createSortMarkup } from './view/sort.js';
 import { createCreatingFormMarkup } from './view/creating-form.js';
 import { createEditFormMarkup } from './view/edit-form.js';
 import { createWaypointsMarkup } from './view/waypoint.js';
+import { wayPoints, filter } from './mock.js';
+import { WAYPOINT_COUNT } from './const';
 
-const WAYPOINT_COUNT = 3;
 
 const pageHeader = document.querySelector('.page-header');
 const pageBodyPageMain = document.querySelector('.page-body__page-main');
@@ -21,14 +22,12 @@ const renderMarkup = (container, template, place) => {
 };
 
 renderMarkup(tripControlsNavigation, createMenuMarkup(), 'beforeend');
-renderMarkup(tripMain, createRouteMarkup(), 'afterbegin');
-renderMarkup(tripMain, createCostMarkup(), 'afterbegin');
-renderMarkup(tripControlsFilters, createFilterMarkup(), 'beforeend');
+renderMarkup(tripControlsFilters, createFilterMarkup(filter), 'beforeend');
 renderMarkup(tripEvents, createSortMarkup(), 'beforeend');
-renderMarkup(tripEvents, createEditFormMarkup(), 'beforeend');
-renderMarkup(tripEvents, createCreatingFormMarkup(), 'beforeend');
-
-
+renderMarkup(tripMain, createRouteMarkup(wayPoints), 'afterbegin');
+renderMarkup(tripMain, createCostMarkup(wayPoints), 'afterbegin');
+renderMarkup(tripEvents, createCreatingFormMarkup(wayPoints[0]), 'beforeend');
+renderMarkup(tripEvents, createEditFormMarkup(wayPoints[0]), 'beforeend');
 for (let i = 0; i < WAYPOINT_COUNT; i++) {
-  renderMarkup(tripEvents, createWaypointsMarkup(), 'beforeend');
+  renderMarkup(tripEvents, createWaypointsMarkup(wayPoints[i]), 'beforeend');
 }
