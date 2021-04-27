@@ -13,7 +13,7 @@ export default class SiteMenu {
   }
 
   getTemplate() {
-    return createMenuMarkup;
+    return createMenuMarkup();
   }
 
   getElement() {
