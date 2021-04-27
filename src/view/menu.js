@@ -1,3 +1,5 @@
+import {createElement} from '../utils.js';
+
 const createMenuMarkup = () => {
   return `<nav class="trip-controls__trip-tabs  trip-tabs">
     <a class="trip-tabs__btn  trip-tabs__btn--active" href="#">Table</a>
@@ -5,4 +7,24 @@ const createMenuMarkup = () => {
   </nav>`;
 };
 
-export { createMenuMarkup };
+export default class SiteMenu {
+  constructor () {
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createMenuMarkup;
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}
