@@ -1,14 +1,14 @@
 import SiteMenuView from './view/menu.js';
-import { createRouteMarkup } from './view/route.js';
-import { createCostMarkup } from './view/cost.js';
-import { createFilterMarkup } from './view/filter.js';
-import { createSortMarkup } from './view/sort.js';
-import { createCreatingFormMarkup } from './view/creating-form.js';
-import { createEditFormMarkup } from './view/edit-form.js';
-import { createWaypointsMarkup } from './view/waypoint.js';
-import { wayPoints, filter } from './mock.js';
-import { WAYPOINT_COUNT } from './const';
-import {renderTemplate, renderElement, renderPosition} from './utils.js';
+import RouteView from './view/route.js';
+import CostView from './view/cost.js';
+import FilterView from './view/filter.js';
+import SortWaysView from './view/sort.js';
+import CreateFormView from './view/creating-form.js';
+import EditFormView from './view/edit-form.js';
+import WayPointView from './view/way-point.js';
+import {wayPoints, filter} from './mock.js';
+import {WAY_POINTS_COUNT} from './const';
+import {renderElement, renderPosition} from './utils.js';
 
 
 const pageHeader = document.querySelector('.page-header');
@@ -18,14 +18,35 @@ const tripControlsNavigation = pageHeader.querySelector('.trip-controls__navigat
 const tripControlsFilters = pageHeader.querySelector('.trip-controls__filters');
 const tripEvents = pageBodyPageMain.querySelector('.trip-events');
 
+const renderPoints = (point) => {
+  const way = new WayPointView(point);
+  const editWayPoint = new EditFormView(point);
+
+  const replaceWayPointToForm = () => {
+    tripEvents.replaceChild(editWayPoint.getElement(point), way.getElement(point));
+  };
+
+  const replaceFormToWayPoint = () => {
+    tripEvents.replaceChild(way.getElement(point), editWayPoint.getElement(point));
+  };
+
+  way.getElement(point).querySelector('.event__rollup-btn').addEventListener('click', () => {
+    replaceWayPointToForm();
+  });
+  editWayPoint.getElement(point).addEventListener('submit', (evt) => {
+    evt.preventDefault();
+    replaceFormToWayPoint();
+  });
+  renderElement(tripEvents, way.getElement(), renderPosition.BEFOREEND);
+};
 
 renderElement(tripControlsNavigation, new SiteMenuView().getElement(), renderPosition.BEFOREEND);
-renderTemplate(tripControlsFilters, createFilterMarkup(filter), 'beforeend');
-renderTemplate(tripEvents, createSortMarkup(), 'beforeend');
-renderTemplate(tripMain, createRouteMarkup(wayPoints), 'afterbegin');
-renderTemplate(tripMain, createCostMarkup(wayPoints), 'afterbegin');
-renderTemplate(tripEvents, createCreatingFormMarkup(wayPoints[0]), 'beforeend');
-renderTemplate(tripEvents, createEditFormMarkup(wayPoints[0]), 'beforeend');
-for (let i = 0; i < WAYPOINT_COUNT; i++) {
-  renderTemplate(tripEvents, createWaypointsMarkup(wayPoints[i]), 'beforeend');
+renderElement(tripControlsFilters, new FilterView(filter).getElement(), renderPosition.BEFOREEND);
+renderElement(tripEvents, new SortWaysView().getElement(), renderPosition.BEFOREEND);
+renderElement(tripMain, new RouteView(wayPoints).getElement(), renderPosition.AFTERBEGIN);
+renderElement(tripMain, new CostView().getElement(wayPoints), renderPosition.AFTERBEGIN);
+renderElement(tripEvents, new CreateFormView(wayPoints[0]).getElement(), renderPosition.BEFOREEND);
+for (let i = 0; i < WAY_POINTS_COUNT; i++) {
+  renderPoints(wayPoints[i]);
 }
+

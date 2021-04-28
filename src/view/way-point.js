@@ -1,7 +1,9 @@
 import dayjs from 'dayjs';
-const createWaypointsMarkup = (waypoints) => {
+import {createElement} from '../utils.js';
+
+const createWayPointsMarkup = (wayPoints) => {
   const {price, startDate, endDate, offers, type,
-    destination, duration} = waypoints;
+    destination, duration} = wayPoints;
   const renderOffers = () => {
     return  offers ? offers.map((offer) => `<li class="event__offer">
     <span class="event__offer-title">${offer.title}</span>
@@ -48,4 +50,25 @@ const createWaypointsMarkup = (waypoints) => {
   </ul>`;
 };
 
-export { createWaypointsMarkup };
+export default class WayPoint {
+  constructor(wayPoints) {
+    this._wayPoints = wayPoints;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createWayPointsMarkup(this._wayPoints);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}

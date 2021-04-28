@@ -1,7 +1,8 @@
 import dayjs from 'dayjs';
-import { renderOffersContainer } from './creating-form.js';
-const createEditFormMarkup = (waypoints) => {
-  const {type, destination, startDate, endDate, price, information, offers} = waypoints;
+import {renderOffersContainer} from '../utils.js';
+import {createElement} from '../utils.js';
+const createEditFormMarkup = (wayPoints) => {
+  const {type, destination, startDate, endDate, price, information, offers} = wayPoints;
 
   return `<form class="event event--edit" action="#" method="post">
     <header class="event__header">
@@ -115,4 +116,25 @@ const createEditFormMarkup = (waypoints) => {
   </form>`;
 };
 
-export { createEditFormMarkup };
+export default class EditForm {
+  constructor(wayPoints) {
+    this._element = null;
+    this._wayPoints = wayPoints;
+  }
+
+  getTemplate() {
+    return createEditFormMarkup(this._wayPoints);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}
