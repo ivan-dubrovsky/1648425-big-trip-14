@@ -1,3 +1,5 @@
+import {createElement} from '../utils.js';
+
 const createSortMarkup = () => {
   return `<form class="trip-events__trip-sort  trip-sort" action="#" method="get">
     <div class="trip-sort__item  trip-sort__item--day">
@@ -27,4 +29,24 @@ const createSortMarkup = () => {
   </form>`;
 };
 
-export { createSortMarkup };
+export default class SortWays {
+  constructor() {
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createSortMarkup();
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}

@@ -1,4 +1,6 @@
 import dayjs from 'dayjs';
+import {createElement} from '../utils.js';
+
 const createRouteMarkup = (wayPoints) => {
   return `<section class="trip-main__trip-info  trip-info">
       <div class="trip-info__main">
@@ -10,4 +12,25 @@ const createRouteMarkup = (wayPoints) => {
     </section>`;
 };
 
-export { createRouteMarkup };
+export default class Route {
+  constructor(wayPoints) {
+    this._wayPoints = wayPoints;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createRouteMarkup(this._wayPoints);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}

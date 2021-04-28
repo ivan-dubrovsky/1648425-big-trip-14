@@ -1,31 +1,9 @@
 import dayjs from 'dayjs';
+import {renderOffersContainer} from '../utils.js';
+import {createElement} from '../utils.js';
 
-const getOffersTemplate = (title, price) => {
-  return `<div class="event__offer-selector">
-  <input class="event__offer-checkbox  visually-hidden" id="event-offer-${title}-1" type="checkbox" name="event-offer-${title}" checked>
-  <label class="event__offer-label" for="event-offer-${title}-1">
-    <span class="event__offer-title">${title}</span>
-    &plus;&euro;&nbsp;
-    <span class="event__offer-price">${price}</span>
-  </label>
-</div>`;
-};
-
-const renderOffersContainer = (offers) => {
-  const renderOffers = (offers) => {
-    return  offers ? offers.map((offer) => getOffersTemplate(offer.title, offer.price))
-      .join('') : offers = ' ';
-  };
-  return offers ?  `<section class="event__section  event__section--offers">
-  <h3 class="event__section-title  event__section-title--offers">Offers</h3>
-  <div class="event__available-offers">
-  ${renderOffers(offers)}
-  </div>
-  </section>` : '';
-};
-
-const createCreatingFormMarkup = (waypoints) => {
-  const {type, destination, startDate, endDate, price, information, offers} = waypoints;
+const createCreatingFormMarkup = (wayPoints) => {
+  const {type, destination, startDate, endDate, price, information, offers} = wayPoints;
   return `<form class="event event--edit" action="#" method="post">
     <header class="event__header">
       <div class="event__type-wrapper">
@@ -125,4 +103,25 @@ ${renderOffersContainer(offers)}
   </form>`;
 };
 
-export { createCreatingFormMarkup, renderOffersContainer};
+export default class CreateForm {
+  constructor(wayPoints) {
+    this._wayPoints = wayPoints;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createCreatingFormMarkup(this._wayPoints);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}

@@ -1,3 +1,5 @@
+import {createElement} from '../utils.js';
+
 const getSumOfNumbers = (arr) => {
   const reducer = (accumulator, currentValue) => accumulator + currentValue;
   return arr.reduce(reducer);
@@ -15,4 +17,25 @@ const createCostMarkup = (wayPoint) => {
   </p>`;
 };
 
-export { createCostMarkup };
+export default class Cost {
+  constructor() {
+    this._element = null;
+  }
+
+  getTemplate(wayPoint) {
+    return createCostMarkup(wayPoint);
+  }
+
+  getElement(wayPoint) {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate(wayPoint));
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}
+

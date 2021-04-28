@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 import dayjsRandom from 'dayjs-random';
 import { getRandomInteger } from './utils.js';
-import { TYPE_WAYPOINT, DESTINATIONS, DESCRIPTION_TEXT, DURATION} from './const.js';
+import {TYPES_WAY_POINT, DESTINATIONS, DESCRIPTION_TEXT, DURATION} from './const.js';
 
 const getRandomDescription = (arr, max) => {
   const startCount = getRandomInteger(0, arr.length - max);
@@ -70,9 +70,10 @@ offers.set('Bus', busOffers);
 offers.set('Flight', flightOffers);
 offers.set('Drive', driveOffers);
 
+
 // Точка маршрута
 const createWaypoint = () => {
-  const type = TYPE_WAYPOINT[getRandomInteger(0, TYPE_WAYPOINT.length - 1)];
+  const type = TYPES_WAY_POINT[getRandomInteger(0, TYPES_WAY_POINT.length - 1)];
   dayjs.extend(dayjsRandom);
   const startDate = randomDate(-7, 7);
   const endDate = dayjs.soon(getRandomInteger(1,7), startDate).toDate();
