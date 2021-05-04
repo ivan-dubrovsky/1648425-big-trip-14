@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import {renderOffersContainer} from '../utils.js';
+import {renderOffersContainer} from './offers-container.js';
 import {createElement} from '../utils.js';
 
 const createCreatingFormMarkup = (wayPoints) => {

@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import {renderOffersContainer} from '../utils.js';
+import {renderOffersContainer} from './offers-container.js';
 import {createElement} from '../utils.js';
 const createEditFormMarkup = (wayPoints) => {
   const {type, destination, startDate, endDate, price, information, offers} = wayPoints;
