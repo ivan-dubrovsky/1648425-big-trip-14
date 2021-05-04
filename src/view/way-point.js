@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import {createElement} from '../utils.js';
+import AbstractView from './abstract.js';
 
 const createWayPointsMarkup = (wayPoints) => {
   const {price, startDate, endDate, offers, type,
@@ -50,25 +50,13 @@ const createWayPointsMarkup = (wayPoints) => {
   </ul>`;
 };
 
-export default class WayPoint {
+export default class WayPoint extends AbstractView {
   constructor(wayPoints) {
+    super();
     this._wayPoints = wayPoints;
-    this._element = null;
   }
 
   getTemplate() {
     return createWayPointsMarkup(this._wayPoints);
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }

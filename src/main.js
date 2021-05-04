@@ -44,7 +44,7 @@ renderElement(tripControlsNavigation, new SiteMenuView().getElement(), renderPos
 renderElement(tripControlsFilters, new FilterView(filter).getElement(), renderPosition.BEFOREEND);
 renderElement(tripEvents, new SortWaysView().getElement(), renderPosition.BEFOREEND);
 renderElement(tripMain, new RouteView(wayPoints).getElement(), renderPosition.AFTERBEGIN);
-renderElement(tripMain, new CostView().getElement(wayPoints), renderPosition.AFTERBEGIN);
+renderElement(tripMain, new CostView(wayPoints).getElement(), renderPosition.AFTERBEGIN);
 renderElement(tripEvents, new CreateFormView(wayPoints[0]).getElement(), renderPosition.BEFOREEND);
 for (let i = 0; i < WAY_POINTS_COUNT; i++) {
   renderPoints(wayPoints[i]);

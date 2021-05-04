@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 import {renderOffersContainer} from './offers-container.js';
-import {createElement} from '../utils.js';
+import AbstractView from './abstract.js';
 
 const createCreatingFormMarkup = (wayPoints) => {
   const {type, destination, startDate, endDate, price, information, offers} = wayPoints;
@@ -103,25 +103,13 @@ ${renderOffersContainer(offers)}
   </form>`;
 };
 
-export default class CreateForm {
+export default class CreateForm extends AbstractView {
   constructor(wayPoints) {
+    super();
     this._wayPoints = wayPoints;
-    this._element = null;
   }
 
   getTemplate() {
     return createCreatingFormMarkup(this._wayPoints);
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }
