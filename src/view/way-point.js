@@ -54,9 +54,20 @@ export default class WayPoint extends AbstractView {
   constructor(wayPoints) {
     super();
     this._wayPoints = wayPoints;
+    this._editClickHandler = this._editClickHandler.bind(this);
   }
 
   getTemplate() {
     return createWayPointsMarkup(this._wayPoints);
+  }
+
+  _editClickHandler() {
+    this._callback.editClick();
+  }
+
+  setEditClickHandler(callback) {
+    this._callback.editClick = callback;
+    this.getElement().querySelector('.event__rollup-btn')
+      .addEventListener('click', this._editClickHandler);
   }
 }

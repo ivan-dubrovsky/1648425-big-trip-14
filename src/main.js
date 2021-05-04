@@ -8,7 +8,7 @@ import EditFormView from './view/edit-form.js';
 import WayPointView from './view/way-point.js';
 import {wayPoints, filter} from './mock.js';
 import {WAY_POINTS_COUNT} from './const';
-import {renderElement, renderPosition} from './utils.js';
+import {renderElement, renderPosition} from './utils/render.js';
 
 
 const pageHeader = document.querySelector('.page-header');
@@ -18,35 +18,31 @@ const tripControlsNavigation = pageHeader.querySelector('.trip-controls__navigat
 const tripControlsFilters = pageHeader.querySelector('.trip-controls__filters');
 const tripEvents = pageBodyPageMain.querySelector('.trip-events');
 
+
 const renderPoints = (point) => {
   const way = new WayPointView(point);
   const editWayPoint = new EditFormView(point);
-
   const replaceWayPointToForm = () => {
-    tripEvents.replaceChild(editWayPoint.getElement(point), way.getElement(point));
+    tripEvents.replaceChild(editWayPoint.getElement(point), way.getElement());
   };
-
   const replaceFormToWayPoint = () => {
-    tripEvents.replaceChild(way.getElement(point), editWayPoint.getElement(point));
+    tripEvents.replaceChild(way.getElement(), editWayPoint.getElement(point));
   };
-
-  way.getElement(point).querySelector('.event__rollup-btn').addEventListener('click', () => {
+  way.setEditClickHandler(() => {
     replaceWayPointToForm();
   });
-  editWayPoint.getElement(point).addEventListener('submit', (evt) => {
-    evt.preventDefault();
+  editWayPoint.setFormSubmitHandler(() => {
     replaceFormToWayPoint();
   });
-  renderElement(tripEvents, way.getElement(), renderPosition.BEFOREEND);
+  renderElement(tripEvents, way, renderPosition.BEFOREEND);
 };
 
-renderElement(tripControlsNavigation, new SiteMenuView().getElement(), renderPosition.BEFOREEND);
-renderElement(tripControlsFilters, new FilterView(filter).getElement(), renderPosition.BEFOREEND);
-renderElement(tripEvents, new SortWaysView().getElement(), renderPosition.BEFOREEND);
-renderElement(tripMain, new RouteView(wayPoints).getElement(), renderPosition.AFTERBEGIN);
-renderElement(tripMain, new CostView(wayPoints).getElement(), renderPosition.AFTERBEGIN);
-renderElement(tripEvents, new CreateFormView(wayPoints[0]).getElement(), renderPosition.BEFOREEND);
+renderElement(tripControlsNavigation, new SiteMenuView(), renderPosition.BEFOREEND);
+renderElement(tripControlsFilters, new FilterView(filter), renderPosition.BEFOREEND);
+renderElement(tripEvents, new SortWaysView(), renderPosition.BEFOREEND);
+renderElement(tripMain, new RouteView(wayPoints), renderPosition.AFTERBEGIN);
+renderElement(tripMain, new CostView(wayPoints), renderPosition.AFTERBEGIN);
+renderElement(tripEvents, new CreateFormView(wayPoints[0]), renderPosition.BEFOREEND);
 for (let i = 0; i < WAY_POINTS_COUNT; i++) {
   renderPoints(wayPoints[i]);
 }
-

@@ -121,9 +121,17 @@ export default class EditForm extends AbstractView {
   constructor(wayPoints) {
     super();
     this._wayPoints = wayPoints;
+    this._formSubmitHandler = this._formSubmitHandler.bind(this);
   }
-
   getTemplate() {
     return createEditFormMarkup(this._wayPoints);
+  }
+  _formSubmitHandler(evt) {
+    evt.preventDefault();
+    this._callback.formSubmit();
+  }
+  setFormSubmitHandler(callback) {
+    this._callback.formSubmit = callback;
+    this.getElement().addEventListener('submit', this._formSubmitHandler);
   }
 }

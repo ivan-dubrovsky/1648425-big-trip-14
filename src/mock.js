@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 import dayjsRandom from 'dayjs-random';
-import { getRandomInteger } from './utils.js';
+import { getRandomInteger } from './utils/common.js';
 import {TYPES_WAY_POINT, DESTINATIONS, DESCRIPTION_TEXT, DURATION} from './const.js';
 
 const getRandomDescription = (arr, max) => {

@@ -1,9 +1,5 @@
 import AbstractView from './abstract.js';
-
-const getSumOfNumbers = (arr) => {
-  const reducer = (accumulator, currentValue) => accumulator + currentValue;
-  return arr.reduce(reducer);
-};
+import {getSumOfNumbers} from '../utils/common.js';
 
 const getPrices = (arr) => {
   const costs = [];
