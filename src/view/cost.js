@@ -1,9 +1,5 @@
-import {createElement} from '../utils.js';
-
-const getSumOfNumbers = (arr) => {
-  const reducer = (accumulator, currentValue) => accumulator + currentValue;
-  return arr.reduce(reducer);
-};
+import AbstractView from './abstract.js';
+import {getSumOfNumbers} from '../utils/common.js';
 
 const getPrices = (arr) => {
   const costs = [];
@@ -17,25 +13,14 @@ const createCostMarkup = (wayPoint) => {
   </p>`;
 };
 
-export default class Cost {
-  constructor() {
-    this._element = null;
+export default class Cost extends AbstractView {
+  constructor(wayPoints) {
+    super();
+    this._wayPoints = wayPoints;
   }
 
-  getTemplate(wayPoint) {
-    return createCostMarkup(wayPoint);
-  }
-
-  getElement(wayPoint) {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate(wayPoint));
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
+  getTemplate() {
+    return createCostMarkup(this._wayPoints);
   }
 }
 

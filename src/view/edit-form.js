@@ -1,6 +1,7 @@
 import dayjs from 'dayjs';
-import {renderOffersContainer} from '../utils.js';
-import {createElement} from '../utils.js';
+import {renderOffersContainer} from './offers-container.js';
+import AbstractView from './abstract.js';
+
 const createEditFormMarkup = (wayPoints) => {
   const {type, destination, startDate, endDate, price, information, offers} = wayPoints;
 
@@ -116,25 +117,21 @@ const createEditFormMarkup = (wayPoints) => {
   </form>`;
 };
 
-export default class EditForm {
+export default class EditForm extends AbstractView {
   constructor(wayPoints) {
-    this._element = null;
+    super();
     this._wayPoints = wayPoints;
+    this._formSubmitHandler = this._formSubmitHandler.bind(this);
   }
-
   getTemplate() {
     return createEditFormMarkup(this._wayPoints);
   }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
+  _formSubmitHandler(evt) {
+    evt.preventDefault();
+    this._callback.formSubmit();
   }
-
-  removeElement() {
-    this._element = null;
+  setFormSubmitHandler(callback) {
+    this._callback.formSubmit = callback;
+    this.getElement().addEventListener('submit', this._formSubmitHandler);
   }
 }

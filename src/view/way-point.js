@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import {createElement} from '../utils.js';
+import AbstractView from './abstract.js';
 
 const createWayPointsMarkup = (wayPoints) => {
   const {price, startDate, endDate, offers, type,
@@ -50,25 +50,24 @@ const createWayPointsMarkup = (wayPoints) => {
   </ul>`;
 };
 
-export default class WayPoint {
+export default class WayPoint extends AbstractView {
   constructor(wayPoints) {
+    super();
     this._wayPoints = wayPoints;
-    this._element = null;
+    this._editClickHandler = this._editClickHandler.bind(this);
   }
 
   getTemplate() {
     return createWayPointsMarkup(this._wayPoints);
   }
 
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
+  _editClickHandler() {
+    this._callback.editClick();
   }
 
-  removeElement() {
-    this._element = null;
+  setEditClickHandler(callback) {
+    this._callback.editClick = callback;
+    this.getElement().querySelector('.event__rollup-btn')
+      .addEventListener('click', this._editClickHandler);
   }
 }
