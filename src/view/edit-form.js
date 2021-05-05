@@ -122,6 +122,8 @@ export default class EditForm extends AbstractView {
     super();
     this._wayPoints = wayPoints;
     this._formSubmitHandler = this._formSubmitHandler.bind(this);
+    this._closeFormHandler = this._closeFormHandler.bind(this);
+    // this._onEscKeyDownHandler = this._onEscKeyDownHandler.bind(this);
   }
   getTemplate() {
     return createEditFormMarkup(this._wayPoints);
@@ -130,8 +132,40 @@ export default class EditForm extends AbstractView {
     evt.preventDefault();
     this._callback.formSubmit();
   }
+  _closeFormHandler() {
+    this._callback.closeForm();
+  }
+
+
   setFormSubmitHandler(callback) {
     this._callback.formSubmit = callback;
     this.getElement().addEventListener('submit', this._formSubmitHandler);
   }
+
+  setCloseFormHandler(callback) {
+    this._callback.closeForm = callback;
+    this.getElement().querySelector('.event__rollup-btn')
+      .addEventListener('click', this._closeFormHandler);
+  }
+
+  // _onEscKeyDownHandler(evt) {
+  //   if (evt.key === 'Escape' || evt.key === 'Esc') {
+  //     evt.preventDefault();
+  //     this._callback.closeOnEsc();
+  //     // document.removeEventListener('keydown', this._onEscKeyDownHandler);
+  //   }
+  // }
+
+  // _removeEventEscListener() {
+  //   this._callback.removeListener();
+  // }
+
+  // setOnEscKeyDownHandler(callback) {
+  //   this._callback.closeOnEsc = callback;
+  //   document.addEventListener('keydown', this._onEscKeyDownHandler);
+  // }
+
+  // removeEventListener() {
+  //   document.removeEventListener('keydown', this.__onEscKeyDownHandler);
+  // }
 }

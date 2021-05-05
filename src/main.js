@@ -18,21 +18,33 @@ const tripControlsNavigation = pageHeader.querySelector('.trip-controls__navigat
 const tripControlsFilters = pageHeader.querySelector('.trip-controls__filters');
 const tripEvents = pageBodyPageMain.querySelector('.trip-events');
 
-
 const renderPoints = (point) => {
   const way = new WayPointView(point);
   const editWayPoint = new EditFormView(point);
   const replaceWayPointToForm = () => {
-    tripEvents.replaceChild(editWayPoint.getElement(point), way.getElement());
+    tripEvents.replaceChild(editWayPoint.getElement(), way.getElement());
   };
   const replaceFormToWayPoint = () => {
-    tripEvents.replaceChild(way.getElement(), editWayPoint.getElement(point));
+    tripEvents.replaceChild(way.getElement(), editWayPoint.getElement());
+  };
+  const onEscKeyDown = (evt) => {
+    if (evt.key === 'Escape' || evt.key === 'Esc') {
+      evt.preventDefault();
+      replaceFormToWayPoint();
+      document.removeEventListener('keydown', onEscKeyDown);
+    }
   };
   way.setEditClickHandler(() => {
     replaceWayPointToForm();
+    document.addEventListener('keydown', onEscKeyDown);
   });
   editWayPoint.setFormSubmitHandler(() => {
     replaceFormToWayPoint();
+    document.removeEventListener('keydown', onEscKeyDown);
+  });
+  editWayPoint.setCloseFormHandler(() => {
+    replaceFormToWayPoint();
+    document.removeEventListener('keydown', onEscKeyDown);
   });
   renderElement(tripEvents, way, renderPosition.BEFOREEND);
 };
